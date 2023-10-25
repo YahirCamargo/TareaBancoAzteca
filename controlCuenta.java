@@ -3,21 +3,16 @@ package com.mycompany.unidad3.BANCO_AZTECA;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.table.DefaultTableModel;
-import java.io.*;
-import java.util.*;
 
 public class controlCuenta {
     //cambios
     
-    //estructura dinamica para guardar cuentas ArrayList
     
-    // investigar el instanceOff para el reporte por categoria 
-    //y con eso separar cuenta ahorro o cuenta corriente
-    private ArrayList<Cuenta> cuentas=new ArrayList<Cuenta>();
+    public ArrayList<Cuenta> cuentas=new ArrayList<Cuenta>();
+    
+    
     
     public String agregar(Cuenta cuenta){
-        
-       
         cuentas.add(cuenta);
         return "Cuenta agregada";
     }
@@ -45,7 +40,7 @@ public class controlCuenta {
     
     public String reporteXNombreInverso(){
         String cadena="";
-        Collections.sort(cuentas, Collections.reverseOrder(new compararNames()));
+        Collections.sort(cuentas, Collections.reverseOrder(new compararNumCuenta()));
         
         for(Cuenta c: cuentas){
             cadena+=c.toString()+"\n";
@@ -101,7 +96,7 @@ public class controlCuenta {
         
         String cAhorro="Cuentas ahorro:\n";
         String cCorriente="Cuentas corrientes:\n";
-        Collections.sort(cuentas, Collections.reverseOrder(new compararNames()));
+        Collections.sort(cuentas, Collections.reverseOrder(new compararNumCuenta()));
         
         for(int i=0; i<cuentas.size();i++){
             if(cuentas.get(i) instanceof cuentaAhorro){
@@ -118,13 +113,15 @@ public class controlCuenta {
     
     public String abonSal(int nCuenta, double abono){
         Cuenta cuenta = buscarCuentaNum(nCuenta);
-        
+        cuentaCorriente co;
         if (cuenta == null) {
             return "Cuenta no encontrada";
         }
         
+           
+        
         cuenta.abonarSaldo(abono);
-        return "Saldo abonado";
+        return "Saldo abonado, ahora tu saldo es: "+Double.toString(cuenta.getSaldo());
     }
     
     
@@ -134,12 +131,27 @@ public class controlCuenta {
         if (cuenta == null) {
             return "Cuenta no encontrada";
         }
-        cuenta.cargarSaldo(cargo);
-        return "Saldo cargado";
+        if (cuenta instanceof cuentaAhorro){
+            if(cuenta.getSaldo()<cargo){
+                return "No hay saldo suficiente para realizar esta operacion";
+            }else{
+                   cuenta.cargarSaldo(cargo);
+                   return "Saldo cargado, ahora tu saldo es: "+Double.toString(cuenta.getSaldo()); 
+                    }
+        }else if(cuenta instanceof cuentaCorriente)
+            if(cuenta.getSaldo()<cargo+(cargo*((cuentaCorriente)cuenta).getImporteTransaccion())){
+                return "No hay saldo suficiente para realizar esta operacion";
+            }else{
+                ((cuentaCorriente) cuenta).setTransacciones(cargo);
+                cuenta.cargarSaldo(cargo);
+                return "Saldo cargado, ahora tu saldo es: "+Double.toString(cuenta.getSaldo());
+        }
         
+        
+        return "Nada";
     }
     
-    
+    //debe de mostrar el saldo para que sepa cual es su nuevo saldo
     public Cuenta buscarCuentaNum(int nCuenta){
         
         for (Cuenta cuenta:cuentas){
@@ -149,6 +161,28 @@ public class controlCuenta {
             }
         }
         return null;
+    }
+    
+    public String busCuenNumAho(int nCuenta){
+        cuentaAhorro ca;
+        
+        Cuenta cuenta = buscarCuentaNum(nCuenta);
+        if (cuenta == null) {
+            return "Cuenta no encontrada";
+        }
+        ca=(cuentaAhorro)cuenta;
+        return ca.toString();
+    }
+    
+    public String busCuenNumCor(int nCuenta){
+        cuentaCorriente cc;
+        
+        Cuenta cuenta = buscarCuentaNum(nCuenta);
+        if (cuenta == null) {
+            return "Cuenta no encontrada";
+        }
+        cc=(cuentaCorriente)cuenta;
+        return cc.toString();
     }
     
     
@@ -166,20 +200,19 @@ public class controlCuenta {
     
     
     //corregir este metodo, no hace ningun cambio
-    public String cambiosCuentaAhorro(int nCuenta, double nCuota) {
+    public String cambiosCuentaAhorro(int nCuenta, int NewNCuenta, String NewNombre, double NewSaldo, double NewCuota) {
+        
         cuentaAhorro ca;    
-
-    //esta inconcluso ya que no se como obtener el atributo faltante encontrado en la
-        //clase cuentaAhorro
+        
         Cuenta cuenta = buscarCuentaNum(nCuenta);
-        
-        
-        
         if (cuenta == null) {
             return "Cuenta no encontrada";
         }
         ca=(cuentaAhorro)cuenta;
-        ca.setCuotaMantenimiento(nCuota);
+        ca.setNumCuenta(NewNCuenta);
+        ca.setNombre_cliente(NewNombre);
+        ca.setSaldo(NewSaldo);
+        ca.setCuotaMantenimiento(NewCuota);
         // Actualizamos la cuenta en la lista
         cuentas.set(cuentas.indexOf(cuenta), cuenta);
         cuentas.set(cuentas.indexOf(cuenta), ca);
@@ -190,19 +223,19 @@ public class controlCuenta {
     
     }
     
-    //corregir este metodo, no hace ningun cambio
-    public String cambiosCuentaCorriente(int nCuenta, double nImporte) {
+    
+    public String cambiosCuentaCorriente(int nCuenta, int NewNCuenta, String NewNombre, double NewSaldo, double NewImporte) {
         cuentaCorriente co;    
-
-    //esta inconcluso ya que no se como obtener el atributo faltante encontrado en la
-        //clase cuentaAhorro
         Cuenta cuenta = buscarCuentaNum(nCuenta);
 
         if (cuenta == null) {
             return "Cuenta no encontrada";
         }
         co=(cuentaCorriente) cuenta;
-        co.setImporteTransaccion(nImporte);
+        co.setNumCuenta(NewNCuenta);
+        co.setNombre_cliente(NewNombre);
+        co.setSaldo(NewSaldo);
+        co.setImporteTransaccion(NewImporte);
         // Actualizamos la cuenta en la lista
         cuentas.set(cuentas.indexOf(cuenta), cuenta);
         cuentas.set(cuentas.indexOf(cuenta), co);
@@ -470,5 +503,7 @@ public class controlCuenta {
 
         return dtm;
     }
+    
+    
     
 }

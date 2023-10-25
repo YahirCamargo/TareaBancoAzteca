@@ -136,7 +136,6 @@ private controlCuenta conc;
             cuentaCorriente cuenCo=new cuentaCorriente(Integer.parseInt(numCuenta1.getText()),
                 nomCliente1.getText(),
                 Double.parseDouble(saldo1.getText()),
-                0,
                 Double.parseDouble(impTransa1.getText()));
             pizarrin.append(conc.agregar(cuenCo));
         }else{

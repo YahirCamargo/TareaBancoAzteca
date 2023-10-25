@@ -2,10 +2,10 @@
 package com.mycompany.unidad3.BANCO_AZTECA;
 
 public abstract class Cuenta {
-    
-    public int numCuenta;
-    public String nombre_cliente;
-    public double saldo;
+    // cambiar estos atributos a privados
+    private int numCuenta;
+    private String nombre_cliente;
+    private double saldo;
 
     public Cuenta(int numCuenta, String nombre_cliente, double saldo) {
         this.numCuenta = numCuenta;
@@ -51,9 +51,13 @@ public abstract class Cuenta {
     public void cargarSaldo(double monto){
         if(saldo>=monto){
             saldo-=monto;
-        }else{
-            //regresar algo que diga que el saldo no es suficiente
         }
+        /*
+            else{
+                //regresar algo que diga que el saldo no es suficiente
+            }
+        */
+        
     }
     
     
@@ -61,6 +65,8 @@ public abstract class Cuenta {
         
     
     public abstract void intereses();
+    
+    public abstract String formatoParaGuar();
 
     @Override
     public String toString() {

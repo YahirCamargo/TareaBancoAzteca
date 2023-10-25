@@ -1,18 +1,23 @@
 package com.mycompany.unidad3.BANCO_AZTECA;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ArrayList;
 
 public class cuentaAhorro extends Cuenta{
-    public double cuotaMantenimiento;
+    private double cuotaMantenimiento;
+    Cuenta cuenta;
     
-     public List<Cuenta> lista = new ArrayList<>();
+    
+    int num1; 
+    String nombre1; 
+    double saldo1;
 
     
     
     public cuentaAhorro(int numCuenta, String nombre_cliente, double saldo, double cuotaMantenimiento){
-        super(numCuenta, nombre_cliente, saldo);
+        super(numCuenta, nombre_cliente,saldo);
+        num1=numCuenta;
+        nombre1=nombre_cliente;
+        saldo1=saldo;
         this.cuotaMantenimiento=cuotaMantenimiento;
     }
 
@@ -29,13 +34,13 @@ public class cuentaAhorro extends Cuenta{
     @Override
     public void comisiones() {
         if (LocalDate.now().getDayOfMonth()==1){
-            saldo-=cuotaMantenimiento;
+            cuenta.setSaldo(cuenta.getSaldo()-cuotaMantenimiento);
         }
     }
     @Override
     public void intereses() {
         if (LocalDate.now().getDayOfMonth()==1){
-            saldo*=1.15;
+            cuenta.setSaldo(cuenta.getSaldo()-cuotaMantenimiento);
         }
     }
 
@@ -44,8 +49,11 @@ public class cuentaAhorro extends Cuenta{
         return ""+super.toString()+ "Cuota de mantenimiento= " + cuotaMantenimiento;
     }
     
-    
-    public void cambiosCuotaMantenimiento(double nuevaCuotaMantenimiento){
-        this.cuotaMantenimiento=nuevaCuotaMantenimiento;
+    @Override
+    public String formatoParaGuar() {
+        return "A,"+num1+","+nombre1+","+saldo1+","+cuotaMantenimiento;
     }
+    
+    
+    
 }
