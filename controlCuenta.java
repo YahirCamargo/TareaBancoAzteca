@@ -151,7 +151,7 @@ public class controlCuenta {
         return "Nada";
     }
     
-    //debe de mostrar el saldo para que sepa cual es su nuevo saldo
+    
     public Cuenta buscarCuentaNum(int nCuenta){
         
         for (Cuenta cuenta:cuentas){
@@ -199,7 +199,6 @@ public class controlCuenta {
     
     
     
-    //corregir este metodo, no hace ningun cambio
     public String cambiosCuentaAhorro(int nCuenta, int NewNCuenta, String NewNombre, double NewSaldo, double NewCuota) {
         
         cuentaAhorro ca;    
@@ -241,6 +240,34 @@ public class controlCuenta {
         cuentas.set(cuentas.indexOf(cuenta), co);
 
         return "Cuenta cambiada";
+    }
+    
+    
+    
+    public String cambiarSaldo(int numCuenta, double NewSaldo){
+        String cadena="";
+        cuentaAhorro ca;
+        cuentaCorriente co;
+        Cuenta cuenta = buscarCuentaNum(numCuenta);
+        
+        if (cuenta == null) {
+            return "No hay cuenta";
+        }
+        if(cuenta instanceof cuentaAhorro){
+            ca=(cuentaAhorro)cuenta;
+            ca.setSaldo(NewSaldo);
+            cuentas.set(cuentas.indexOf(cuenta), cuenta);
+            cuentas.set(cuentas.indexOf(cuenta), ca);
+            cadena="Tu saldo cambio correctamente a: "+ca.getSaldo();
+            
+        }else if(cuenta instanceof cuentaCorriente){
+            co=(cuentaCorriente)cuenta;
+            co.setSaldo(NewSaldo);
+            cuentas.set(cuentas.indexOf(cuenta), cuenta);
+            cuentas.set(cuentas.indexOf(cuenta), co);
+            cadena="Tu saldo cambio correctamente a: "+co.getSaldo();
+        }
+        return  cadena;
     }
     
     
@@ -503,7 +530,4 @@ public class controlCuenta {
 
         return dtm;
     }
-    
-    
-    
 }

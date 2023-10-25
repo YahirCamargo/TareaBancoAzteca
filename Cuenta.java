@@ -2,7 +2,6 @@
 package com.mycompany.unidad3.BANCO_AZTECA;
 
 public abstract class Cuenta {
-    // cambiar estos atributos a privados
     private int numCuenta;
     private String nombre_cliente;
     private double saldo;
