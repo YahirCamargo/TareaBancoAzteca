@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class cuentaAhorro extends Cuenta{
     private double cuotaMantenimiento;
-    Cuenta cuenta;
     
     
     int num1; 
@@ -34,13 +33,13 @@ public class cuentaAhorro extends Cuenta{
     @Override
     public void comisiones() {
         if (LocalDate.now().getDayOfMonth()==1){
-            cuenta.setSaldo(cuenta.getSaldo()-cuotaMantenimiento);
+            super.setSaldo(super.getSaldo()-cuotaMantenimiento);
         }
     }
     @Override
     public void intereses() {
         if (LocalDate.now().getDayOfMonth()==1){
-            cuenta.setSaldo(cuenta.getSaldo()-cuotaMantenimiento);
+            super.setSaldo(super.getSaldo()-cuotaMantenimiento);
         }
     }
 
@@ -51,7 +50,7 @@ public class cuentaAhorro extends Cuenta{
     
     @Override
     public String formatoParaGuar() {
-        return "A,"+num1+","+nombre1+","+saldo1+","+cuotaMantenimiento;
+        return "A,"+super.getNumCuenta()+","+super.getNombre_cliente()+","+super.getSaldo()+","+cuotaMantenimiento;
     }
     
     

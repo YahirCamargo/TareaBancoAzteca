@@ -28,22 +28,23 @@ public class cuentaCorriente extends Cuenta{
 
     @Override
     public void comisiones() {
-        if (LocalDate.now().getDayOfMonth() == 1) {
+        if (LocalDate.now().getDayOfMonth()==1) {
             double importeComisiones = transacciones * importeTransaccion;
-            cuenta.setSaldo(cuenta.getSaldo()-importeComisiones);
+            super.setSaldo(super.getSaldo()-importeComisiones);
+            transacciones=0;
+            
         }
     }
 
     @Override
     public void intereses() {
-        if (LocalDate.now().getDayOfMonth() == 1) {
-            if (cuenta.getSaldo() > 20000) {
-                cuenta.setSaldo(cuenta.getSaldo()*1.1);
+        if (LocalDate.now().getDayOfMonth()==1) {
+            if (saldo1 > 20000) {
+                super.setSaldo(super.getSaldo()*1.1);
                 //leer bien esta parte ya que dice que si el saldo esta entre 5,000 y 10,000
-            } else if (cuenta.getSaldo()>=5000&&cuenta.getSaldo()<=10000) {
-                cuenta.setSaldo(cuenta.getSaldo()*1.05);
+            } else if (saldo1>=5000&&saldo1<=10000) {
+                super.setSaldo(super.getSaldo()*1.05);
             }
-            this.transacciones=0;
         }
     }
 
@@ -69,7 +70,7 @@ public class cuentaCorriente extends Cuenta{
     //sino reiniciar cada mes
     @Override
     public String formatoParaGuar() {
-        return "C,"+num1+","+nombre1+","+saldo1+","+transacciones+","+importeTransaccion;
+        return "C,"+super.getNumCuenta()+","+super.getNombre_cliente()+","+super.getSaldo()+","+transacciones+","+importeTransaccion;
     }
     @Override
     public String toString() {

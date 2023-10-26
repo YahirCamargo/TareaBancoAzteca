@@ -7,9 +7,7 @@ import javax.swing.table.DefaultTableModel;
 public class controlCuenta {
     //cambios
     
-    
     public ArrayList<Cuenta> cuentas=new ArrayList<Cuenta>();
-    
     
     
     public String agregar(Cuenta cuenta){
@@ -118,6 +116,17 @@ public class controlCuenta {
             return "Cuenta no encontrada";
         }
         
+        if (cuenta instanceof cuentaAhorro){
+            cuenta.abonarSaldo(abono);
+            return "Saldo cargado, ahora tu saldo es: "+Double.toString(cuenta.getSaldo()); 
+                    
+        }else if(cuenta instanceof cuentaCorriente){
+                Double sumarCuenta=1.0+((cuentaCorriente) cuenta).getTransacciones();
+                ((cuentaCorriente) cuenta).setTransacciones(sumarCuenta);
+                cuenta.abonarSaldo(abono);
+                return "Saldo cargado, ahora tu saldo es: "+Double.toString(cuenta.getSaldo());
+        }
+
            
         
         cuenta.abonarSaldo(abono);
@@ -139,10 +148,11 @@ public class controlCuenta {
                    return "Saldo cargado, ahora tu saldo es: "+Double.toString(cuenta.getSaldo()); 
                     }
         }else if(cuenta instanceof cuentaCorriente)
-            if(cuenta.getSaldo()<cargo+(cargo*((cuentaCorriente)cuenta).getImporteTransaccion())){
+            if(cuenta.getSaldo()<cargo){
                 return "No hay saldo suficiente para realizar esta operacion";
             }else{
-                ((cuentaCorriente) cuenta).setTransacciones(cargo);
+                Double sumarCuenta=1.0+((cuentaCorriente)cuenta).getTransacciones();
+                ((cuentaCorriente)cuenta).setTransacciones(sumarCuenta);
                 cuenta.cargarSaldo(cargo);
                 return "Saldo cargado, ahora tu saldo es: "+Double.toString(cuenta.getSaldo());
         }
@@ -530,4 +540,7 @@ public class controlCuenta {
 
         return dtm;
     }
+    
+    
+    
 }

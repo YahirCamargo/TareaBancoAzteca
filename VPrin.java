@@ -379,11 +379,12 @@ private guardarSave gs;
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenu8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu8MouseClicked
-        
         for(Cuenta c:conc.cuentas){
             if(c instanceof cuentaCorriente){
                 c.comisiones();
                 c.intereses();
+                //conc.cuentas.set(conc.cuentas.indexOf(conc.cuentas), conc.cuentas);
+                //conc.cuentas.set(conc.cuentas.indexOf(conc.cuentas), cuentaCorriente);
             }else if(c instanceof cuentaAhorro){
                 c.comisiones();
                 c.intereses();
