@@ -254,7 +254,7 @@ public class controlCuenta {
     
     
     
-    public String cambiarSaldo(int numCuenta, double NewSaldo){
+    public String cambiarSaldo(int numCuenta){
         String cadena="";
         cuentaAhorro ca;
         cuentaCorriente co;
@@ -265,17 +265,11 @@ public class controlCuenta {
         }
         if(cuenta instanceof cuentaAhorro){
             ca=(cuentaAhorro)cuenta;
-            ca.setSaldo(NewSaldo);
-            cuentas.set(cuentas.indexOf(cuenta), cuenta);
-            cuentas.set(cuentas.indexOf(cuenta), ca);
-            cadena="Tu saldo cambio correctamente a: "+ca.getSaldo();
+            cadena="Tu saldo es: "+ca.getSaldo();
             
         }else if(cuenta instanceof cuentaCorriente){
             co=(cuentaCorriente)cuenta;
-            co.setSaldo(NewSaldo);
-            cuentas.set(cuentas.indexOf(cuenta), cuenta);
-            cuentas.set(cuentas.indexOf(cuenta), co);
-            cadena="Tu saldo cambio correctamente a: "+co.getSaldo();
+            cadena="Tu saldo es: "+co.getSaldo();
         }
         return  cadena;
     }

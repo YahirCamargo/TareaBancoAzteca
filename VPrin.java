@@ -180,7 +180,7 @@ private guardarSave gs;
         });
         jMenu2.add(jMenuItem11);
 
-        jMenuItem19.setText("Cambiar saldo");
+        jMenuItem19.setText("Ver saldo");
         jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem19ActionPerformed(evt);
@@ -401,7 +401,7 @@ private guardarSave gs;
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
-        CambiarSaldoCuenta csc= new CambiarSaldoCuenta(conc);
+        Saldo csc= new Saldo(conc);
         pantalla.add(csc);
         csc.setVisible(true);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
